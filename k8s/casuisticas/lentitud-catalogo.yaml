@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogo-insumos
+  namespace: agrostock
+spec:
+  template:
+    spec:
+      containers:
+        - name: catalogo-insumos
+          env:
+            - name: CATALOGO_DELAY_MS
+              value: "5000"

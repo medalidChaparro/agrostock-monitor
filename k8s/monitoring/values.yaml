@@ -1,0 +1,59 @@
+
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: AgroStock2026!
+  service:
+    type: NodePort
+    nodePort: 30300
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 384Mi
+  defaultDashboardsEnabled: true
+
+prometheus:
+  enabled: true
+  service:
+    type: NodePort
+    nodePort: 30090
+  prometheusSpec:
+    replicas: 1
+    retention: 2h
+    scrapeInterval: 30s
+    evaluationInterval: 30s
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelector: {}
+    resources:
+      requests:
+        cpu: 150m
+        memory: 512Mi
+      limits:
+        cpu: 700m
+        memory: 1200Mi
+
+alertmanager:
+  enabled: false
+
+kube-state-metrics:
+  enabled: true
+
+prometheus-node-exporter:
+  enabled: false
+
+defaultRules:
+  create: true
+
+# Reduce componentes para ahorrar memoria en Minikube
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caso-crashloop
+  namespace: agrostock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caso-crashloop
+  template:
+    metadata:
+      labels:
+        app: caso-crashloop
+    spec:
+      containers:
+        - name: contenedor-fallido
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "echo 'Error simulado para la prueba'; exit 1"]

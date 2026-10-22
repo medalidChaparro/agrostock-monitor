@@ -1,0 +1,49 @@
+
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: agrostock-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: agrostock.availability
+      rules:
+        - alert: CatalogoInsumosDown
+          expr: up{namespace="agrostock", service="catalogo-insumos"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Catalogo de insumos no disponible"
+            description: "Prometheus no puede consultar catalogo-insumos."
+
+        - alert: GestionPedidosDown
+          expr: up{namespace="agrostock", service="gestion-pedidos"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Gestion de pedidos no disponible"
+            description: "Prometheus no puede consultar gestion-pedidos."
+
+    - name: agrostock.business
+      rules:
+        - alert: PedidosRechazadosAltos
+          expr: increase(pedidos_rechazados_total[5m]) >= 3
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Aumento de pedidos rechazados"
+            description: "Se registraron al menos 3 pedidos rechazados en 5 minutos."
+
+        - alert: CatalogoConsultaLenta
+          expr: histogram_quantile(0.95, sum by (le) (rate(catalogo_consulta_duracion_seconds_bucket[5m]))) > 0.5
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Consultas lentas al catalogo"
+            description: "El percentil 95 de las consultas supera los 500 ms."

@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: catalogo-insumos
+  namespace: agrostock
+  labels:
+    release: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - agrostock
+  selector:
+    matchLabels:
+      app: catalogo-insumos
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gestion-pedidos
+  namespace: agrostock
+  labels:
+    release: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - agrostock
+  selector:
+    matchLabels:
+      app: gestion-pedidos
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 30s

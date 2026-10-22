@@ -1,0 +1,20 @@
+# Maven
+**/target/
+**/build/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Variables locales
+.env
+.env.*
+!.env.example

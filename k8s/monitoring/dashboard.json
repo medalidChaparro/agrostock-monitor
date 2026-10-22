@@ -1,0 +1,62 @@
+{
+  "uid": "agrostock-monitor",
+  "title": "AgroStock - Monitoreo de Microservicios",
+  "tags": ["agrostock", "kubernetes", "spring-boot"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Estado de Catalogo de Insumos",
+      "type": "stat",
+      "gridPos": {"h": 5, "w": 12, "x": 0, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [{"expr": "up{namespace=\"agrostock\",service=\"catalogo-insumos\"}", "refId": "A", "instant": true}]
+    },
+    {
+      "id": 2,
+      "title": "Estado de Gestion de Pedidos",
+      "type": "stat",
+      "gridPos": {"h": 5, "w": 12, "x": 12, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [{"expr": "up{namespace=\"agrostock\",service=\"gestion-pedidos\"}", "refId": "A", "instant": true}]
+    },
+    {
+      "id": 3,
+      "title": "Consultas al Catalogo por Minuto",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 5},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [{"expr": "rate(catalogo_consultas_total[5m])*60", "legendFormat": "Consultas/min", "refId": "A"}]
+    },
+    {
+      "id": 4,
+      "title": "Pedidos Aceptados y Rechazados",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 5},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "rate(pedidos_aceptados_total[5m])*60", "legendFormat": "Aceptados/min", "refId": "A"},
+        {"expr": "rate(pedidos_rechazados_total[5m])*60", "legendFormat": "Rechazados/min", "refId": "B"}
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Insumos en Memoria",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 13},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [{"expr": "catalogo_insumos_en_memoria", "refId": "A", "instant": true}]
+    },
+    {
+      "id": 6,
+      "title": "Duracion P95 de Consultas al Catalogo",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 13},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [{"expr": "histogram_quantile(0.95, sum by (le) (rate(catalogo_consulta_duracion_seconds_bucket[5m])))", "legendFormat": "P95 (segundos)", "refId": "A"}]
+    }
+  ]
+}
