@@ -206,16 +206,19 @@ Estos resultados confirman que ambos objetivos estaban disponibles durante la co
 
 ## 8. Evidencias
 
-Incorporar las capturas ya realizadas, con una breve descripción de cada una:
+![Targets de Prometheus](evidencias/01-prometheus-targets.png)
 
-- **Evidencia 1:** objetivos de Prometheus con los dos servicios en estado UP.
-- **Evidencia 2:** dashboard de Grafana con los paneles de monitoreo.
-- **Evidencia 3:** estado de los pods de AgroStock en Kubernetes.
-- **Evidencia 4:** prueba de la casuística de lentitud del catálogo.
-- **Evidencia 5:** prueba de rechazo de pedidos por stock insuficiente.
-- **Evidencia 6:** estado de una alerta en FIRING, si se dispone de esa captura.
+![Dashboard de Grafana](evidencias/02-dashboard-grafana.png)
 
-Las evidencias deben corresponder a pruebas realmente ejecutadas. No se debe afirmar que una alerta se activó si no se verificó su estado.
+![Pods ejecutándose](evidencias/03-pods-running.png)
+
+![Prueba de CrashLoopBackOff](evidencias/04-caso-crashloop.png)
+
+![Alerta de CrashLoopBackOff](evidencias/05-caso-crashloop-alerta.png)
+
+![Prueba de stock insuficiente](evidencias/06-caso-stock-insuficiente.png)
+
+![Prueba de lentitud del catálogo](evidencias/07-caso-lentitud.png)
 
 ## 9. Conclusiones
 
